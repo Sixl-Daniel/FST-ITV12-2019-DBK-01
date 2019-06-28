@@ -1,0 +1,6 @@
+host = 'localhost';
+db   = 'database';
+user = 'root';
+pass = '';
+charset = 'utf8mb4';
+port = '3306';

@@ -1,0 +1,13 @@
+[testadam]
+first_name = Adam
+last_name = Test
+email = testadam@testing.com
+password = secretpw
+salutation = Herr
+
+[testeva]
+first_name = Eva
+last_name = Test
+email = testeva@testing.com
+password = secretpw
+salutation = Frau
