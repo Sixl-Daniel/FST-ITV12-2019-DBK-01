@@ -27,8 +27,8 @@
   }
 }
 
-@media only screen and (min-width: 2300px) {
-  .list-courses {
+@media only screen and (min-width: 1200px) {
+  .list-cards--locations {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 2em;
@@ -42,8 +42,22 @@
   }
 }
 
-//@media only screen and (min-width: 1800px) {
-//  .list-courses {
-//    grid-template-columns: repeat(3, 1fr);
-//  }
-//}
+@media only screen and (min-width: 2300px) {
+  .list-cards--locations {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .list-cards--courses,
+  .list-cards--participants,
+  .list-cards--bookings {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2em;
+    .card {
+      margin: 0;
+      height: 100%;
+      display: flex;
+      flex-flow: column;
+      .card-content { flex: 1; }
+    }
+  }
+}
