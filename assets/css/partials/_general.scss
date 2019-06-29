@@ -149,6 +149,10 @@ section p > a {
     background-color: $teal-lighten-5;
   }
   > h3 { margin-top: 0;}
+  &.section--login {
+    max-width: 600px;
+    margin: 6rem auto;
+  }
 }
 
 // functional classes
