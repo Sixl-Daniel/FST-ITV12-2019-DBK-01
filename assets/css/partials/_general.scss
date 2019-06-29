@@ -24,6 +24,14 @@ p {
   }
 }
 
+footer p {
+  > a {
+    &:active, &:hover {
+      color: $teal-lighten-5;
+    }
+  }
+}
+
 code {
   background: $grey-lighten-2;
   padding: 0.1em 0.3em 0.075em;
