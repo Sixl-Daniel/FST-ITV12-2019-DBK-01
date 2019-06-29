@@ -1,0 +1,49 @@
+@media only screen and (max-width: 480px) {
+  .card .card-content {
+    padding: 10px;
+  }
+  td, th {
+    padding: 5px 5px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  table.responsive-table tbody tr {
+    display: inline-block;
+    vertical-align: top;
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 480px) {
+  .card .card-title .material-icons {
+    display: inline-block;
+  }
+}
+
+@media only screen and (min-width: 1180px) {
+  nav .brand-logo {
+    display: inline-block;
+  }
+}
+
+@media only screen and (min-width: 2300px) {
+  .list-courses {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2em;
+    .card {
+      margin: 0;
+      height: 100%;
+      display: flex;
+      flex-flow: column;
+      .card-content { flex: 1; }
+    }
+  }
+}
+
+//@media only screen and (min-width: 1800px) {
+//  .list-courses {
+//    grid-template-columns: repeat(3, 1fr);
+//  }
+//}

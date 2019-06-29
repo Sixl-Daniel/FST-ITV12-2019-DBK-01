@@ -2,7 +2,7 @@
 if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
 ?>
 
-<h1 class="page-title">Übung Datenbanken<br><smaller>Anbindung mit PHP</smaller></h1>
+<h1 class="page-title">Übung Daten&shy;banken<br><smaller>Anbindung mit PHP</smaller></h1>
 
 <section class="section section--intro">
     <div class="row">

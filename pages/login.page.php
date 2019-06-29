@@ -36,11 +36,11 @@
 <section class="row section section-box section--login">
     <form id="login-form" name="login" action="" method="post" class="col s12">
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6">
                 <input id="username" name="username" type="text" class="validate" value="">
                 <label for="username">Benutzername</label>
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6">
                 <input id="password" name="password" type="password" class="validate" value="">
                 <label for="password">Passwort</label>
             </div>

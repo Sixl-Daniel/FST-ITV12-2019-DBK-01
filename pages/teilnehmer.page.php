@@ -5,10 +5,9 @@ $db = new Database();
 
 $teilnehmerModel = new ModelTeilnehmer($db);
 $teilnehmer = $teilnehmerModel->getAll();
-// $teilnehmer = $teilnehmerModel->getParticipantsOfCourse('5.1c');
 ?>
 
-<h2 class="page-title">Teilnehmer</h2>
+<h2 class="page-title">Teil&shy;nehmer</h2>
 
 <section class="section section--output">
     <div id="list-participants" class="list-cards list-cards--participants">
@@ -22,7 +21,7 @@ $teilnehmer = $teilnehmerModel->getAll();
                 <div class="card">
                     <div class="card-content">
                         <p class="card-title"><i class="medium material-icons">account_box</i> <?=Helper::escape($t->name)?>, <?=Helper::escape($t->vorname)?></p>
-                        <table class="responsive-table striped">
+                        <table class="responsive-table">
                             <thead>
                                 <tr>
                                     <th>Id</th>

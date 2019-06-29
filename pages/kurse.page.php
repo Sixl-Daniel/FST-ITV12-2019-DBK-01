@@ -20,7 +20,7 @@ $kurse = $kursModel->getAll();
             <div class="card">
                 <div class="card-content">
                     <p class="card-title"><i class="medium material-icons">folder_open</i> <?=Helper::escape($k->kurs)?> <?=$hasParticipants?></p>
-                    <table class="responsive-table striped">
+                    <table class="responsive-table">
                         <thead>
                             <tr>
                                 <th>Id</th>

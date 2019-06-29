@@ -17,7 +17,7 @@ $locations = $locationsModel->getAll();
                 <div class="card">
                     <div class="card-content">
                         <p class="card-title"><i class="medium material-icons">location_on</i> <?=Helper::escape($l->schule)?></p>
-                        <table class="responsive-table striped">
+                        <table class="responsive-table">
                             <thead>
                                 <tr>
                                     <th>Id</th>

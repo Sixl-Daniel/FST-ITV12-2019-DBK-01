@@ -2,7 +2,7 @@
 if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
 ?>
 
-<h2 class="page-title">Impressum & Datenschutz</h2>
+<h2 class="page-title">Impressum & Daten&shy;schutz</h2>
 
 <section class="section section--legal">
     <div class="row">
@@ -19,7 +19,7 @@ if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
 <section class="section section--legal">
     <div class="row">
         <div class="col s12 m10 push-m1 l6 push-l3">
-            <h3 class="center-align">Datenschutz</h3>
+            <h3 class="center-align">Daten&shy;schutz</h3>
                 <blockquote>
                     <p><strong>Die Nutzung unserer Seite ist ohne Angabe von personenbezogenen Daten möglich. Für die Nutzung einzelner Services unserer Seite können sich hierfür abweichende Regelungen ergeben, die in diesem Falle nachstehend gesondert erläutert werden. Personenbezogenen Daten (z.B. Name, Anschrift, E-Mail, Telefonnummer, IP-Adresse u.ä.) werden von uns ausschließlich im Rahmen der Bestimmungen des Datenschutzrechts der Bundesrepublik Deutschland erhoben. Im Weiteren unterrichten wir Sie über Umfang, Art und Zweck dieser Erhebung und deren Verwendung.</strong></p>
                 </blockquote>
@@ -40,7 +40,7 @@ if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
                 <p>Sie haben jederzeit das Recht unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung, Sperrung oder Löschung dieser Daten zu verlangen. Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit unter der im Impressum angegebenen Adresse an uns wenden. Des Weiteren steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu.</p>
                 <h5>Analyse-Tools von Drittanbietern</h5>
                 <p>Beim Besuch von Webseiten kann Ihr Surf-Verhalten statistisch ausgewertet werden. Das geschieht vor allem mit Cookies und mit sogenannten Analyseprogrammen. Sie können diesen Analysen widersprechen oder sie durch die Nichtbenutzung bestimmter Tools verhindern. Über Widerspruchsmöglichkeiten müssen Sie in einer Datenschutzerklärung informiert werden.<br> <strong>Auf dieser Seite ist kein Analysetool von Drittanbietern (bspw. Google Analytics) in Gebrauch.</strong></p>
-                <h4>2) Allgemeine Hinweise und Pflichtinformationen</h4>
+                <h4>2) Allgemeine Hinweise und Pflicht&shy;informationen</h4>
                 <h5>Datenschutz</h5>
                 <p>Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.</p>
                 <p>Wenn Sie diese Website benutzen, werden verschiedene personenbezogene Daten erhoben. Personenbezogene Daten sind Daten, mit denen Sie persönlich identifiziert werden können. Die vorliegende Datenschutzerklärung erläutert, welche Daten wir erheben und wofür wir sie nutzen. Sie erläutert auch, wie und zu welchem Zweck das geschieht.</p>
@@ -61,7 +61,7 @@ if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
                 <p>Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf unentgeltliche Auskunft über Ihre gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung und ggf. ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten. Hierzu sowie zu weiteren Fragen zum Thema personenbezogene Daten können Sie sich jederzeit unter der im Impressum angegebenen Adresse an uns wenden.</p>
                 <h5>Widerspruch gegen Werbe-Mails</h5>
                 <p>Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit widersprochen. Wir behalten uns ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-E-Mails, vor.</p>
-                <h4>3) Datenerfassung auf unserer Website</h4>
+                <h4>3) Daten&shy;erfassung auf unserer Website</h4>
                 <h5>Cookies</h5>
                 <p>Die Internetseiten verwenden teilweise so genannte Cookies. Cookies richten auf Ihrem Rechner keinen Schaden an und enthalten keine Viren. Cookies dienen dazu, unser Angebot nutzerfreundlicher, effektiver und sicherer zu machen. Cookies sind kleine Textdateien, die auf Ihrem Rechner abgelegt werden und die Ihr Browser speichert.</p>
                 <p>Die meisten der von uns verwendeten Cookies sind so genannte „Session-Cookies“. Sie werden nach Ende Ihres Besuchs automatisch gelöscht. Andere Cookies bleiben auf Ihrem Endgerät gespeichert bis Sie diese löschen. Diese Cookies ermöglichen es uns, Ihren Browser beim nächsten Besuch wiederzuerkennen.</p>
@@ -99,7 +99,7 @@ if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
                 <p>Zu diesem Zweck muss der von Ihnen verwendete Browser Verbindung zu den Servern von Google aufnehmen. Hierdurch erlangt Google Kenntnis darüber, dass über Ihre IP-Adresse unsere Website aufgerufen wurde. Die Nutzung von Google Web Fonts erfolgt im Interesse einer einheitlichen und ansprechenden Darstellung unserer Online-Angebote. Dies stellt ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO dar.</p>
                 <p>Wenn Ihr Browser Web Fonts nicht unterstützt, wird eine Standardschrift von Ihrem Computer genutzt.</p>
                 <p>Weitere Informationen zu Google Web Fonts finden Sie unter <a href="https://developers.google.com/fonts/faq">https://developers.google.com/fonts/faq</a> und in der Datenschutzerklärung von Google: <a href="https://www.google.com/policies/privacy/">https://www.google.com/policies/privacy/</a>.</p>
-                <h4>6) Widerspruchsrecht und Auskunftsrecht</h4>
+                <h4>6) Wider&shy;spruchs&shy;recht und Aus&shy;kunfts&shy;recht</h4>
                 <p>Sie haben jederzeit das Recht auf unentgeltliche Auskunft über Ihre bei uns gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger und den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten.</p>
                 <hr class="separator">
                 <p>Quellen:<br> <a href="https://www.e-recht24.de/">eRecht24</a>,<br> <a href="https://www.ratgeberrecht.eu/leistungen/muster-datenschutzerklaerung.html">Anwaltskanzlei Weiß &amp; Partner</a>,<br> <a href="https://www.datenschutz.org/datenschutzerklaerung/">datenschutz.org</a>,<br><a href="https://datenschutz-generator.de/" rel="nofollow noopener" target="_blank" style="font-size: 16px;">Datenschutz-Generator.de von RA Dr. jur. Thomas Schwenke</a></p>

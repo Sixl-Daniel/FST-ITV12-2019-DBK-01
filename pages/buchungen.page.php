@@ -7,7 +7,7 @@ $bookingsModel = new ModelBuchung($db);
 $bookings = $bookingsModel->getAll();
 ?>
 
-<h2 class="page-title">Kursbuchungen</h2>
+<h2 class="page-title">Buchungen</h2>
 
 <section class="section section--output">
     <div id="list-bookings" class="list-cards list-cards--bookings">
@@ -23,7 +23,7 @@ $bookings = $bookingsModel->getAll();
                             <i class="medium material-icons">book</i>
                             <?=Helper::escape($b->name)?>, <?=Helper::escape($b->vorname)?> | <?=Helper::escape($b->kurs)?>
                         </p>
-                        <table class="responsive-table striped">
+                        <table class="responsive-table">
                             <thead>
                                 <tr>
                                     <th>Buchungs-Id</th>

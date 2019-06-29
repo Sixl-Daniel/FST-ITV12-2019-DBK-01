@@ -16,3 +16,10 @@ $grey-lighten-5 : #fafafa;
 
 $w: #ffffff;
 $b: #000000;
+
+@mixin gradient-light {
+  background: -moz-linear-gradient(left,  rgba(224,242,241,1) 0%, rgba(255,255,255,1) 100%);
+  background: -webkit-linear-gradient(left,  rgba(224,242,241,1) 0%,rgba(255,255,255,1) 100%);
+  background: linear-gradient(to right,  rgba(224,242,241,1) 0%,rgba(255,255,255,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e0f2f1', endColorstr='#ffffff',GradientType=1 );
+}
