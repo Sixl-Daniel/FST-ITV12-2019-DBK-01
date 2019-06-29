@@ -17,7 +17,7 @@ php composer.phar install
 
 © 2019 Daniel Sixl – [sixl@sixl.org](mailto:sixl@sixl.org)
 
-Distributed under the MIT license. See [LICENSE.md](https://github.com/Sixl-Daniel/FST-ITV12-2019-DBK-01/blob/master/LICENSE) for more information.
+Distributed under the MIT license. See [LICENSE](./LICENCE) for more information.
 
 [https://github.com/Sixl-Daniel](https://github.com/Sixl-Daniel)
 
