@@ -6,7 +6,7 @@ if (
     !isset($_SESSION['token']) ||
     empty($_SESSION['token']) ||
     $_SESSION['token']!=$_POST['token']
-) exit('Access denied');
+) exit('<p style="color:crimson;font-weight: 700;">Der direkter Zugriff auf die AJAX-Schnittstelle ist nicht erlaubt.</p>');
 
 /* request */
 
