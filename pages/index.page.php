@@ -6,7 +6,7 @@ if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
 
 <section class="section section--intro">
     <div class="row">
-        <div class="col s12 m4 push-m1 l5 push-l1">
+        <div class="col s12 m6 l5 push-l1">
             <p class="flow-text lead">
                 <b>Übungs&shy;seite zur An&shy;bind&shy;ung einer MySQL-Datenbank in PHP.</b>
             </p>
@@ -21,7 +21,7 @@ if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
                 <li class="collection-item">Responsives Design</li>
             </ul>
         </div>
-        <div class="col s12 m5 push-m2 l4 push-l2">
+        <div class="col s12 m6 l4 push-l2">
             <p class="boxed">Eine Liste aller Kurse aus der Daten&shy;bank:<br>
                 <a href="/kurse" class="waves-effect waves-light btn-small"><i class="material-icons right">arrow_forward</i>Kurse</a>
             </p>
