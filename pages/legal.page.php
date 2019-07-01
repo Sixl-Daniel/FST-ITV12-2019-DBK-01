@@ -30,7 +30,6 @@ if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
                 <p><em>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</em></p>
                 <p>Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber:</p>
                 <p>Daniel Sixl<br> Krelingstraße 11<br> 90408 Nürnberg</p>
-                <p>Weitere Informationen können Sie dem <a href="/impressum">Impressum</a> dieser Website entnehmen.</p>
                 <h6>Wie erfassen wir Ihre Daten?</h6>
                 <p>Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z.B. um Daten handeln, die Sie in ein Kontaktformular eingeben.</p>
                 <p>Andere Daten werden automatisch beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z.B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs). Die Erfassung dieser Daten erfolgt automatisch, sobald Sie unsere Website betreten.</p>
