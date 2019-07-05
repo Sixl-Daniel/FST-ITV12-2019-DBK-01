@@ -2,7 +2,7 @@
 define("ROOT", __DIR__ . "/");
 require_once ROOT . 'includes/_init.php';
 
-$request = $_SERVER['REDIRECT_URL'];
+$request = isset($_SERVER['REDIRECT_URL']) ?  $_SERVER['REDIRECT_URL'] : '/';
 
 switch ($request) {
 
