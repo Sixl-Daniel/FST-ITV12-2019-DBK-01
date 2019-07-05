@@ -279,7 +279,7 @@ switch($request) {
 
     case 'verifyLogin':
 
-        if(empty($_POST['username']) || empty($_POST['password'])) throw new Exception('Username und Passwort dürfen licht leer sein.');
+        if(empty($_POST['username']) || empty($_POST['password'])) throw new Exception('Username und Passwort dürfen nicht leer sein.');
 
         $enteredUsername = Helper::escape($_POST['username']);
         $enteredPassword = Helper::escape($_POST['password']);
