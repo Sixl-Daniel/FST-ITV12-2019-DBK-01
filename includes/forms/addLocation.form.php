@@ -5,12 +5,12 @@
     <form id="add-location">
 
         <div class="input-field col s12 m6">
-            <input placeholder="Stadt" id="name" name="city" type="text" class="validate" required>
+            <input placeholder="Stadt" id="city" name="city" type="text" class="validate" required>
             <label for="city">Stadt</label>
         </div>
 
         <div class="input-field col s12 m6">
-            <input placeholder="Schule" id="firstname" name="school" type="text" class="validate" required>
+            <input placeholder="Schule" id="school" name="school" type="text" class="validate" required>
             <label for="school">Schule</label>
         </div>
 
