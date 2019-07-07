@@ -14,7 +14,7 @@
             <?php endif; ?>
             <p>Sie sind seit <?=$_SESSION['login']['time']?> im System angemeldet.</p>
             <hr class="separator separator--invisible">
-            <p><a href="<?=$home_url?>?logout=1" class="waves-effect waves-light btn"><i class="material-icons right">exit_to_app</i>Abmelden</a></p>
+            <p><a href="/?logout=1" class="waves-effect waves-light btn"><i class="material-icons right">exit_to_app</i>Abmelden</a></p>
         </div>
         <div class="col s12 m6 l4">
             <ul class="collection with-header">

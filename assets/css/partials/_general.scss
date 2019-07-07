@@ -198,7 +198,6 @@ section p > a {
 
 .material-icons {
   vertical-align: bottom;
-  display: none;
 }
 
 // cards
@@ -209,9 +208,11 @@ section p > a {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    flex-direction: column;
     @include gradient-light;
-    button {
-      margin-left: 1rem;
+    button, a {
+      display: block;
+      margin: 0.25rem 1rem;
     }
   }
 

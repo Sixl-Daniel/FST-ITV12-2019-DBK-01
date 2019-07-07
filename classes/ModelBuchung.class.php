@@ -16,7 +16,7 @@ class ModelBuchung {
             JOIN teilnehmer t on tkz.teilnnr = t.teilnnr
             JOIN kurs k on tkz.kursnr = k.kursnr
             JOIN ort o on k.ortnr = o.ortnr
-            ORDER BY t.name, t.vorname, t.wohnort;
+            ORDER BY t.name, t.vorname, t.ort;
         ');
     }
 

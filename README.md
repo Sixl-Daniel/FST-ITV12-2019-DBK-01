@@ -1,16 +1,16 @@
 # ITV12-DBK 2019 / Sixl
-> Simple CR(U)D Database App: Connecting to MySQL with PHP
+> Simple CRUD Database App: Connecting to MySQL with PHP
 
 [Show a demo of this app](https://project-sixl.de/)
 
 ![https://project-sixl.de/](https://project-sixl.de/assets/img/webopt/project-sixl-mockup-webopt.jpg)
 
-Simple PHP-page, no PHP-framework was used. „Single entry point“ and primitive routing via `index.php`. Simple PDO wrapper class. CRUD via AJAX (no Update yet). Primitive authen­tification and role management using sessions. Responsive design.
+Simple PHP-page, no PHP-framework was used. „Single entry point“ and primitive routing via `index.php`. Svelte PDO wrapper class. CRUD via AJAX. Primitive authen­tification and role management using sessions. Responsive design.
 
 ## Installation
 
 ```sh
-php composer.phar install
+composer install
 ```
 
 ## Meta

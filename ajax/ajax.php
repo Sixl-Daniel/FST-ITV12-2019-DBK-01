@@ -6,7 +6,7 @@ if (
     !isset($_SESSION['token']) ||
     empty($_SESSION['token']) ||
     $_SESSION['token']!=$_POST['token']
-) exit('<p style="color:crimson;font-weight: 700;">Der direkter Zugriff auf die AJAX-Schnittstelle ist nicht erlaubt.</p>');
+) exit('<p style="color:crimson;font-weight: 700;">Der direkte Zugriff auf die AJAX-Schnittstelle ist nicht erlaubt.</p>');
 
 /* request */
 
@@ -20,68 +20,46 @@ $response = new ResponseJSON();
 
 $response->status = "error";
 $response->icon = "error";
-$response->heading = "Fehler";
+$response->heading = "Serverseitiger Fehler";
 
 switch($request) {
 
-    case 'getParticipantsOfCourse':
-
-        if(empty($_POST['course'])) return;
-
-        $course = Helper::escape($_POST['course']);
-
-        try {
-
-            $db = new Database();
-            $participantsModel = new ModelTeilnehmer($db);
-            $participants = $participantsModel->getParticipantsOfCourse($course);
-
-            // create list of participants
-            $buffer = '<ul class="collection">';
-            foreach ($participants as $p) {
-                $buffer .= "<li class='collection-item'><b>$p->name $p->vorname</b>, $p->strasse, $p->wohnort</li>";
-            }
-            $buffer .= '</ul>';
-
-            // respond
-            $response->status = "success";
-            $response->icon = "info";
-            $response->heading = "Teilnehmerliste Kurs $course";
-            $response->message = $buffer;
-
-        } catch (PDOException $e) {
-            $response->message = "Die Teilnehmerliste für den Kurs $course konnte leider nicht geladen werden. ($e->getCode())";
-            error_log($e);
-        }
-
-        break;
+    /*
+     * COURSES
+     ******************************************************************/
 
     case 'getCoursesOfParticipant':
 
         if(empty($_POST['participant'])) return;
 
-        $participant = Helper::escape($_POST['participant']);
+        $participantId = Helper::escape($_POST['participant']);
 
         try {
-
             $db = new Database();
+
             $coursesModel = new ModelKurse($db);
-            $courses = $coursesModel->getCoursesOfParticipant($participant);
+            $courses = $coursesModel->getCoursesOfParticipant($participantId);
 
-            // create list of courses
-            $buffer = '<ul class="collection">';
-            foreach ($courses as $c) {
-                $wordingEvenings = $c->dauer > 1 ? "Abende" : "Abend";
-                $buffer .= "<li class='collection-item'><b>$c->kurs</b> ($c->dauer $wordingEvenings)<br>Kursnummer: $c->kursnr<br>Ort: $c->schule, $c->ort</li>";
+            $participantsModel = new ModelTeilnehmer($db);
+            $participant = $participantsModel->get($participantId);
+
+            if(!empty($courses) && !empty($participant)) {
+                // create list of courses
+                $buffer = '<ul class="collection">';
+                foreach ($courses as $c) {
+                    $wordingEvenings = $c->dauer > 1 ? "Abende" : "Abend";
+                    $buffer .= "<li class='collection-item'><b>$c->kurs</b> ($c->dauer $wordingEvenings)<br>Kursnummer: $c->kursnr<br>Ort: $c->schule, $c->ort</li>";
+                }
+                $buffer .= '</ul>';
+
+                // respond
+                $response->status = "success";
+                $response->icon = "info";
+                $response->heading = "Kursliste<br>$participant->vorname $participant->name";
+                $response->message = $buffer;
+            } else {
+                throw new PDOException;
             }
-            $buffer .= '</ul>';
-
-            // respond
-            $response->status = "success";
-            $response->icon = "info";
-            $response->heading = "Kursliste";
-            $response->message = $buffer;
-
         } catch (PDOException $e) {
             $response->message = "Die Kursliste für den Teilnehmer konnte leider nicht geladen werden. ($e->getCode())";
             error_log($e);
@@ -91,9 +69,9 @@ switch($request) {
 
     case 'addCourse':
 
-        if(empty($_POST['id']) || empty($_POST['title']) || empty($_POST['duration']) || empty($_POST['prerequisites'])  || empty($_POST['location'])) return;
+        if(empty($_POST['catalogId']) || empty($_POST['title']) || empty($_POST['duration']) || empty($_POST['prerequisites'])  || empty($_POST['location'])) return;
 
-        $id = Helper::escape($_POST['id']);
+        $catalogId = Helper::escape($_POST['catalogId']);
         $title = Helper::escape($_POST['title']);
         $duration = Helper::escape($_POST['duration']);
         $prerequisites = Helper::escape($_POST['prerequisites']);
@@ -101,18 +79,57 @@ switch($request) {
 
         try {
             $db = new Database();
-            $course = new ModelKurse($db);
-            $insert = $course->add($id, $title, $duration, $prerequisites, $location);
-            $response->status = "success";
-            $response->icon = "success";
-            $response->heading = 'Kurs angelegt';
-            $response->message = "Der neue Kurs <strong>„${title}“</strong> mit der ID <strong>${id}</strong> wurde hinzugefügt.";
-        } catch(PDOException $e) {
-            if ($e->getCode() == 23000) {
-                $response->message = "Der Kurs kann leider nicht angelegt werden.<br>Ein Kurs mit der ID <strong>${id}</strong> existiert bereits.";
+            $courseModel = new ModelKurse($db);
+            $insert = $courseModel->add($catalogId, $title, $duration, $prerequisites, $location);
+            if(!empty($insert)) {
+                // respond
+                $response->status = "success";
+                $response->icon = "success";
+                $response->heading = 'Kurs angelegt';
+                $response->message = "Der neue Kurs <strong>$title</strong> mit der Nummer <strong>$catalogId</strong> wurde hinzugefügt.";
             } else {
-                $response->message = "Der Kurs <strong>„${title}“</strong> mit der ID <strong>${id}</strong> konnte leider nicht angelegt werden. ";
+                throw new PDOException;
             }
+        } catch(PDOException $e) {
+
+            if ($e->getCode() == 23000) {
+                $response->message = "Der Kurs <strong>$title</strong> kann leider nicht angelegt werden.<br>Ein Kurs mit der Nummer <strong>$catalogId</strong> existiert bereits. Die Nummer muss eindeutig sein.";
+            } else {
+                $response->message = "Der Kurs <strong>$title</strong> mit der Nummer <strong>$catalogId</strong> konnte leider nicht angelegt werden. ";
+            }
+            error_log($e);
+        }
+
+        break;
+
+    case 'updateCourse':
+
+        if(empty($_POST['catalogId']) || empty($_POST['title']) || empty($_POST['duration']) || empty($_POST['prerequisites'])  || empty($_POST['location']) || empty($_POST['id'])) return;
+
+        $catalogId = Helper::escape($_POST['catalogId']);
+        $title = Helper::escape($_POST['title']);
+        $duration = Helper::escape($_POST['duration']);
+        $prerequisites = Helper::escape($_POST['prerequisites']);
+        $location = Helper::escape($_POST['location']);
+        $updateId = Helper::escape($_POST['id']);
+
+        try {
+            $db = new Database();
+            $courseModel = new ModelKurse($db);
+
+            $update = $courseModel->update($catalogId, $title, $duration, $prerequisites, $location, $updateId);
+
+            if(!empty($update)) {
+                // respond
+                $response->status = "success";
+                $response->icon = "success";
+                $response->heading = 'Kurs geändert';
+                $response->message = "Der Kurs wurde erfolgreich aktualisiert.";
+            } else {
+                throw new PDOException;
+            }
+        } catch(PDOException $e) {
+            $response->message = "Der Kurs konnte leider nicht aktualisiert werden.";
             error_log($e);
         }
 
@@ -126,20 +143,26 @@ switch($request) {
         try {
             $db = new Database();
             $courseModel = new ModelKurse($db);
-            if($courseModel->delete($id)) {
+            $delete = $courseModel->delete($id);
+            if(!empty($delete)) {
+                // respond
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Kurs gelöscht';
-                $response->message = "Der Kurs mit der Id $id wurde erfolgreich entfernt.";
+                $response->message = "Der Kurs wurde erfolgreich entfernt.";
             } else {
                 throw new PDOException;
             }
         } catch(PDOException $e) {
-            $response->message = "Der Kurs mit der Id $id konnte leider nicht gelöscht werden.";
+            $response->message = "Der Kurs konnte leider nicht gelöscht werden.";
             error_log($e);
         }
 
         break;
+
+    /*
+     * BOOKINGS
+     ******************************************************************/
 
     case 'addBooking':
 
@@ -148,12 +171,18 @@ switch($request) {
 
         try {
             $db = new Database();
-            $booking = new ModelBuchung($db);
-            $booking->add($course, $participant);
-            $response->status = "success";
-            $response->icon = "success";
-            $response->heading = 'Buchung erfolgreich';
-            $response->message = "Teilnehmer <strong>$participant</strong> wurde für den Kurs <strong>$course</strong> eingeschrieben.";
+            $bookingModel = new ModelBuchung($db);
+            $insert = $bookingModel->add($course, $participant);
+            if(!empty($insert)) {
+                // respond
+                $response->status = "success";
+                $response->icon = "success";
+                $response->heading = 'Buchung erfolgreich';
+                $response->message = "Teilnehmer <strong>$participant</strong> wurde für den Kurs <strong>$course</strong> eingeschrieben.";
+            } else {
+                throw new PDOException;
+            }
+
         } catch(PDOException $e) {
             $response->message = "Teilnehmer <strong>$participant</strong> konnte leider nicht für den Kurs <strong>$course</strong> eingeschrieben.";
             error_log($e);
@@ -169,7 +198,9 @@ switch($request) {
         try {
             $db = new Database();
             $bookingModel = new ModelBuchung($db);
-            if($bookingModel->delete($id)) {
+            $deletion = $bookingModel->delete($id);
+            if(!empty($deletion)) {
+                // respond
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Buchung gelöscht';
@@ -184,25 +215,105 @@ switch($request) {
 
         break;
 
-    case 'addParticipant':
+    /*
+     * PARTICIPANTS
+     ******************************************************************/
 
-        $name = !empty($_POST['name']) ? Helper::escape($_POST['name']) : '';
-        $firstname = !empty($_POST['firstname']) ? Helper::escape($_POST['firstname']) : '';
-        $street = !empty($_POST['street']) ? Helper::escape($_POST['street']) : '';
-        $housenumber = !empty($_POST['housenumber']) ? Helper::escape($_POST['housenumber']) : '';
-        $zip = !empty($_POST['zip']) ? Helper::escape($_POST['zip']) : '';
-        $city = !empty($_POST['city']) ? Helper::escape($_POST['city']) : '';
+    case 'getParticipantsOfCourse':
+
+        if(empty($_POST['course'])) return;
+
+        $courseId = Helper::escape($_POST['course']);
 
         try {
             $db = new Database();
-            $participant = new ModelTeilnehmer($db);
-            $participant->add($name, $firstname, $street, $housenumber, $zip, $city);
-            $response->status = "success";
-            $response->icon = "success";
-            $response->heading = 'Teilnehmer angelegt';
-            $response->message = "Teilnehmer/in <b>$firstname $name</b> wurde erfolgreich hinzugefügt.";
+
+            $participantsModel = new ModelTeilnehmer($db);
+            $participants = $participantsModel->getParticipantsOfCourse($courseId);
+
+            $courseModel = new ModelKurse($db);
+            $course = $courseModel->get($courseId);
+
+            if(!empty($participants) && !empty($course)) {
+                // create list of participants
+                $buffer = '<ul class="collection">';
+                foreach ($participants as $p) {
+                    $buffer .= "<li class='collection-item'><b>$p->name $p->vorname</b>, $p->strassenname $p->hausnummer, $p->postleitzahl $p->ort</li>";
+                }
+                $buffer .= '</ul>';
+                // respond
+                $response->status = "success";
+                $response->icon = "info";
+                $response->heading = "Teilnehmerliste<br>$course->kurs";
+                $response->message = $buffer;
+            } else {
+                throw new PDOException;
+            }
+        } catch (PDOException $e) {
+            $response->message = "Die Teilnehmerliste für den Kurs $courseId konnte leider nicht geladen werden. ($e->getCode())";
+            error_log($e);
+        }
+
+        break;
+
+    case 'addParticipant':
+
+        if(empty($_POST['name']) || empty($_POST['firstname']) || empty($_POST['street']) || empty($_POST['housenumber']) || empty($_POST['zip']) || empty($_POST['city'])) return;
+
+        $name = Helper::escape($_POST['name']);
+        $firstname = Helper::escape($_POST['firstname']);
+        $street = Helper::escape($_POST['street']);
+        $housenumber = Helper::escape($_POST['housenumber']);
+        $zip = Helper::escape($_POST['zip']);
+        $city = Helper::escape($_POST['city']);
+
+        try {
+            $db = new Database();
+            $participantModel = new ModelTeilnehmer($db);
+            $insert = $participantModel->add($name, $firstname, $street, $housenumber, $zip, $city);
+            if(!empty($insert)) {
+                // respond
+                $response->status = "success";
+                $response->icon = "success";
+                $response->heading = 'Teilnehmer angelegt';
+                $response->message = "Teilnehmer/in <b>$firstname $name</b> wurde erfolgreich hinzugefügt.";
+            } else {
+                throw new PDOException;
+            }
         } catch(PDOException $e) {
             $response->message = "Teilnehmer/in <b>$firstname $name</b> konnte leider nicht angelegt werden.";
+            error_log($e);
+        }
+
+        break;
+
+    case 'updateParticipant':
+
+        if(empty($_POST['name']) || empty($_POST['firstname']) || empty($_POST['street']) || empty($_POST['housenumber']) || empty($_POST['zip']) || empty($_POST['city']) || empty($_POST['id'])) return;
+
+        $name = Helper::escape($_POST['name']);
+        $firstname = Helper::escape($_POST['firstname']);
+        $street = Helper::escape($_POST['street']);
+        $housenumber = Helper::escape($_POST['housenumber']);
+        $zip = Helper::escape($_POST['zip']);
+        $city = Helper::escape($_POST['city']);
+        $updateId = Helper::escape($_POST['id']);
+
+        try {
+            $db = new Database();
+            $participantModel = new ModelTeilnehmer($db);
+            $update = $participantModel->update($name, $firstname, $street, $housenumber, $zip, $city, $updateId);
+            if(!empty($update)) {
+                // respond
+                $response->status = "success";
+                $response->icon = "success";
+                $response->heading = 'Teilnehmer geändert';
+                $response->message = "Der Teilnehmer wurde erfolgreich aktualisiert.";
+            } else {
+                throw new PDOException;
+            }
+        } catch(PDOException $e) {
+            $response->message = "Der Teilnehmer konnte leider nicht aktualisiert werden.";
             error_log($e);
         }
 
@@ -216,7 +327,9 @@ switch($request) {
         try {
             $db = new Database();
             $participantModel = new ModelTeilnehmer($db);
-            if($participantModel->delete($id)) {
+            $deletion = $participantModel->delete($id);
+            if(!empty($deletion)) {
+                // respond
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Teilnehmer gelöscht';
@@ -231,23 +344,63 @@ switch($request) {
 
         break;
 
+    /*
+     * LOCATIONS
+     ******************************************************************/
+
     case 'addLocation':
 
-        if(empty($_POST['city']) || empty($_POST['school'])) return;
+    if(empty($_POST['city']) || empty($_POST['school'])) return;
 
+    $city = Helper::escape($_POST['city']);
+    $school = Helper::escape($_POST['school']);
+
+    try {
+        $db = new Database();
+        $location = new ModelOrt($db);
+        $insert = $location->add($city, $school);
+        if(!empty($insert)) {
+            // respond
+            $status = 200;
+            $response->status = "success";
+            $response->icon = "success";
+            $response->heading = 'Ort angelegt';
+            $response->message = "<b>$school</b> in <b>$city</b> wurde hinzugefügt.";
+        } else {
+            throw new PDOException;
+        }
+    } catch(PDOException $e) {
+        $response->message = "<b>$school</b> in <b>$city</b> konnte leider nicht angelegt werden.";
+        error_log($e);
+    }
+
+    break;
+
+    case 'updateLocation':
+
+        if(empty($_POST['id']) || empty($_POST['city']) || empty($_POST['school'])) return;
+
+        $id = Helper::escape($_POST['id']);
         $city = Helper::escape($_POST['city']);
         $school = Helper::escape($_POST['school']);
 
         try {
             $db = new Database();
             $location = new ModelOrt($db);
-            $location->add($city, $school);
-            $response->status = "success";
-            $response->icon = "success";
-            $response->heading = 'Ort angelegt';
-            $response->message = "<b>$school</b> in <b>$city</b> wurde hinzugefügt.";
+            $update = $location->update($city, $school, $id);
+            if(!empty($update)) {
+                // respond
+                $status = 200;
+                $response->status = "success";
+                $response->icon = "success";
+                $response->heading = 'Ort aktualisiert';
+                $response->message = "Die Location wurde erfolgreich auf <b>$school</b> in <b>$city</b> geändert.";
+            } else {
+                throw new PDOException;
+            }
+
         } catch(PDOException $e) {
-            $response->message = "<b>$school</b> in <b>$city</b> konnte leider nicht angelegt werden.";
+            $response->message = "Der Ort konnte leider nicht aktualisiert werden.";
             error_log($e);
         }
 
@@ -261,8 +414,10 @@ switch($request) {
         try {
             $db = new Database();
             $location = new ModelOrt($db);
-            // $del = $location->delete($id);
-            if($location->delete($id)) {
+            $deletion = $location->delete($id);
+            if(!empty($deletion)) {
+                // respond
+                $status = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Ort gelöscht';
@@ -277,33 +432,39 @@ switch($request) {
 
         break;
 
+    /*
+     * LOGIN
+     ******************************************************************/
+
     case 'verifyLogin':
 
-        if(empty($_POST['username']) || empty($_POST['password'])) throw new Exception('Username und Passwort dürfen nicht leer sein.');
+        if(empty($_POST['username']) || empty($_POST['password'])) return;
 
         $enteredUsername = Helper::escape($_POST['username']);
         $enteredPassword = Helper::escape($_POST['password']);
 
         $users = parse_ini_file(ROOT . "config/users.ini", true);
-        $dbPassword = $users[$enteredUsername]['password'];
+
+        $dbPassword = array_key_exists($enteredUsername, $users) ? $users[$enteredUsername]['password'] : '';
+
+        // $dbPassword = $users[$enteredUsername]['password'];
 
         if($dbPassword == $enteredPassword) {
-
             // write data to session
             $_SESSION['login'] = $users[$enteredUsername];
             $timestamp = time();
             $_SESSION['login']['timestamp'] = $timestamp;
             $_SESSION['login']['time'] = strftime("%A, %d. %B %Y, %H:%M Uhr", $timestamp);
-
             $loggedIn = true;
+            // respond
             $response->status = "success";
             $response->icon = "success";
             $response->heading = 'Login';
             $response->message = "Sie wurden erfolgreich eingeloggt.";
         } else {
-            $response->message = "Diese Kombination aus Nutzername und Passwort existiert leider nicht. Bitte kontrollieren Sie ihre Zugangsdaten.";
+            $response->heading = 'Ungültige Zugangsdaten';
+            $response->message = "Diese Kombination aus Nutzername und Passwort existiert leider nicht. Bitte kontrollieren Sie Ihre Eingaben.";
         }
-
 
         break;
 

@@ -33,8 +33,8 @@ $teilnehmer = $teilnehmerModel->getAll();
                             <tbody>
                                 <tr>
                                     <td><?=Helper::escape($t->teilnnr)?></td>
-                                    <td><?=Helper::escape($t->strasse)?></td>
-                                    <td><?=Helper::escape($t->wohnort)?></td>
+                                    <td><?=Helper::escape($t->strassenname)?> <?=Helper::escape($t->hausnummer)?></td>
+                                    <td><?=Helper::escape($t->postleitzahl)?> <?=Helper::escape($t->ort)?></td>
                                     <?php if($hasCourses): ?>
                                         <td><?=Helper::escape($t->anzahl_kurse)?></td>
                                     <?php else : ?>
@@ -44,13 +44,16 @@ $teilnehmer = $teilnehmerModel->getAll();
                             </tbody>
                         </table>
                     </div>
-                    <?php if($hasCourses || $isAdmin) : ?>
+                    <?php if($hasCourses || $hasRightsUpdate) : ?>
                         <div class="card-action">
-                            <?php if($hasCourses): ?>
-                            <button data-participant="<?=Helper::escape($t->teilnnr)?>" class="show-courses waves-effect waves-light btn btn-small">Gebuchte Kurse</button>
+                            <?php if($hasCourses) : ?>
+                            <button data-participant="<?=Helper::escape($t->teilnnr)?>" class="show-courses waves-effect waves-light btn btn-small"><i class="material-icons right">visibility</i>Gebuchte Kurse</button>
                             <?php endif; ?>
-                            <?php if($isAdmin): ?>
-                            <button data-participant="<?=Helper::escape($t->teilnnr)?>" class="delete-participant red darken-2 waves-effect waves-light btn btn-small">Löschen</button>
+                            <?php if($hasRightsDelete) : ?>
+                            <button data-participant="<?=Helper::escape($t->teilnnr)?>" class="delete-participant red darken-2 waves-effect waves-light btn btn-small"><i class="material-icons right">delete</i>Löschen</button>
+                            <?php endif; ?>
+                            <?php if($hasRightsUpdate): ?>
+                                <a href="/edit?object=participant&id=<?=Helper::escape($t->teilnnr)?>" class="edit-course blue darken-2 waves-effect waves-light btn btn-small"><i class="material-icons right">create</i>Bearbeiten</a>
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
