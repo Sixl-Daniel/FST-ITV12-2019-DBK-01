@@ -16,7 +16,7 @@ $locations = $locationsModel->getAll();
             <div class="card-wrapper" id="teilnehmer-id-<?=Helper::escape($l->ortnr)?>">
                 <div class="card">
                     <div class="card-content">
-                        <p class="card-title"><i class="medium material-icons">location_on</i> <?=Helper::escape($l->schule)?></p>
+                        <p class="card-title"><i class="medium material-icons">location_on</i> <span class="data-school"><?=Helper::escape($l->schule)?></span></p>
                         <table class="responsive-table">
                             <thead>
                                 <tr>
@@ -26,15 +26,18 @@ $locations = $locationsModel->getAll();
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><?=Helper::escape($l->ortnr)?></td>
-                                    <td><?=Helper::escape($l->ort)?></td>
+                                    <td><span class="data-id"><?=Helper::escape($l->ortnr)?></span></td>
+                                    <td><span class="data-city"><?=Helper::escape($l->ort)?></span></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <?php if($isAdmin): ?>
+                    <?php if($hasRightsUpdate) : ?>
                         <div class="card-action">
-                            <button data-location="<?=Helper::escape($l->ortnr)?>" class="delete-location red darken-2 waves-effect waves-light btn btn-small">Löschen</button>
+                            <?php if($hasRightsDelete) : ?>
+                            <button data-location="<?=Helper::escape($l->ortnr)?>" class="delete-location red darken-2 waves-effect waves-light btn btn-small"><i class="material-icons right">delete</i>Löschen</button>
+                            <?php endif; ?>
+                            <a href="/edit?object=location&id=<?=Helper::escape($l->ortnr)?>" class="edit-location blue darken-2 waves-effect waves-light btn btn-small"><i class="material-icons right">create</i>Bearbeiten</a>
                         </div>
                     <?php endif; ?>
                 </div>

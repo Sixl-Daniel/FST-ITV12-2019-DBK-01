@@ -1,4 +1,5 @@
-<div class="row section section-box">
+<?php if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt."); ?>
+<section class="row section section-box">
 
     <h3 class="heading-section">Neue Location anlegen</h3>
 
@@ -20,4 +21,4 @@
 
     </form>
 
-</div>
+</section>

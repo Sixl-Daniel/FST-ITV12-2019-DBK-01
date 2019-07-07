@@ -1,4 +1,5 @@
-<div class="row section section-box section-box--primary">
+<?php if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt."); ?>
+<section class="row section section-box section-box--primary">
 
     <h3 class="heading-section">Neue Kursbuchung</h3>
 
@@ -25,9 +26,9 @@
         </div>
 
         <div class="input-field col s12">
-            <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">add</i>Teilnehmer zu Kurs hinzufügen</button>
+            <button type="submit" class="waves-effect waves-light btn"><i class="material-icons left">group_add</i>Teilnehmer für Kurs einschreiben</button>
         </div>
 
     </form>
 
-</div>
+</section>

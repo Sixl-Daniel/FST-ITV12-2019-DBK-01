@@ -21,14 +21,14 @@ $bookings = $bookingsModel->getAll();
                     <div class="card-content">
                         <p class="card-title">
                             <i class="medium material-icons">book</i>
-                            <?=Helper::escape($b->name)?>, <?=Helper::escape($b->vorname)?> | <?=Helper::escape($b->kurs)?>
+                            <span class="participant"><?=Helper::escape($b->name)?>, <?=Helper::escape($b->vorname)?></span> <span class="teal-text">in</span> <?=Helper::escape($b->kurs)?>
                         </p>
                         <table class="responsive-table">
                             <thead>
                                 <tr>
-                                    <th>Buchungs-Id</th>
-                                    <th>Kurs-Id</th>
-                                    <th>Teilnehmer-Id</th>
+                                    <th>Buchung</th>
+                                    <th>Kurs</th>
+                                    <th>Teilnehmer</th>
                                     <th>Ort</th>
                                     <th>Dauer</th>
                                 </tr>
@@ -36,7 +36,7 @@ $bookings = $bookingsModel->getAll();
                             <tbody>
                                 <tr>
                                     <td class="booking-id"><?=Helper::escape($b->id)?></td>
-                                    <td><?=Helper::escape($b->kursnr)?></td>
+                                    <td><?=Helper::escape($b->katalognummer)?></td>
                                     <td><?=Helper::escape($b->teilnnr)?></td>
                                     <td><?=Helper::escape($b->schule)?>, <?=Helper::escape($b->ort)?></td>
                                     <td><?=Helper::escape($b->dauer)?> <?=$wordingEvenings?></td>
@@ -46,7 +46,7 @@ $bookings = $bookingsModel->getAll();
                     </div>
                     <?php if($isAdmin): ?>
                         <div class="card-action">
-                            <button data-booking="<?=Helper::escape($b->id)?>" class="delete-booking red darken-2 waves-effect waves-light btn btn-small">Teilnehmer abmelden</button>
+                            <button data-booking="<?=Helper::escape($b->id)?>" class="delete-booking red darken-2 waves-effect waves-light btn btn-small"><i class="material-icons right">delete</i>Teilnehmer abmelden</button>
                         </div>
                     <?php endif; ?>
                 </div>

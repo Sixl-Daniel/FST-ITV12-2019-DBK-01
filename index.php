@@ -44,7 +44,7 @@ switch ($request) {
 
     case '/administration' :
         if(!isset($_SESSION['login'])){
-            header("Location: {$home_url}");
+            header("Location: /");
         }
         $activePage = 'administration';
         $pageContent = 'pages/administration.page.php';
@@ -54,6 +54,15 @@ switch ($request) {
     case '/login' :
         $activePage = 'login';
         $pageContent = 'pages/login.page.php';
+        require_once ROOT . 'templates/default.php';
+        break;
+
+    case '/edit' :
+        if(!$hasRightsUpdate){
+            header("Location: /");
+        }
+        $activePage = 'edit';
+        $pageContent = 'pages/edit.page.php';
         require_once ROOT . 'templates/default.php';
         break;
 
