@@ -15,7 +15,7 @@
     <link type="text/css" rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
           media="screen, projection"/>
-    <link type="text/css" rel="stylesheet" href="assets/css/main.css"/>
+    <link type="text/css" rel="stylesheet" href="/assets/css/main.css"/>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 </head>
 <body class="page-<?=$activePage?>">
