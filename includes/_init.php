@@ -23,6 +23,7 @@ $isAdmin = ($loggedIn && $_SESSION['login']['role'] == 'Administrator') ? true :
 $isEditor = ($loggedIn && $_SESSION['login']['role'] == 'Editor') ? true : false;
 $isAuthor = ($loggedIn && $_SESSION['login']['role'] == 'Author') ? true : false;
 
+$hasRightsCreate = $isAdmin || $isEditor || $isAuthor ? true : false;
 $hasRightsUpdate = $isAdmin || $isEditor ? true : false;
 $hasRightsDelete = $isAdmin ? true : false;
 

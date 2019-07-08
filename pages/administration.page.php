@@ -1,5 +1,6 @@
 <?php
 if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
+if(!$hasRightsCreate) die();
 
 $db = new Database();
 
