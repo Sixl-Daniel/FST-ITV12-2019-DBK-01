@@ -14,14 +14,6 @@ main {
 p {
   margin: 0 0 0.5em 0;
   &:last-of-type { margin-bottom: 0; }
-  > a {
-    color: $blue-grey;
-    font-weight: 700;
-    transition: color 300ms linear;
-    &:active, &:hover {
-      color: $teal;
-    }
-  }
 }
 
 footer p {
@@ -45,11 +37,6 @@ blockquote {
 img {
   max-width: 100%;
   height: auto;
-}
-
-section p > a {
-  word-wrap: break-word;
-  word-break: break-all;
 }
 
 .container {
@@ -136,6 +123,19 @@ section p > a {
 .section--404 {
   p { margin: 2rem 0; }
   animation: fade-in-left ease-out 300ms forwards;
+}
+
+.section--legal {
+  p > a {
+    word-wrap: break-word;
+    word-break: break-all;
+    color: $blue-grey;
+    font-weight: 700;
+    transition: color 300ms linear;
+    &:active, &:hover {
+      color: $teal;
+    }
+  }
 }
 
 // boxes
