@@ -25,6 +25,8 @@
                 <li class="collection-item">Benutzername: <b><?=$_SESSION['login']['user_name']?></b></li>
                 <li class="collection-item">E-Mail: <b><?=$_SESSION['login']['email']?></b></li>
                 <li class="collection-item">Rolle: <b><?=$_SESSION['login']['role']?></b></li>
+                <li class="collection-item">Registrierung: <b><?=$_SESSION['login']['user_created']?></b></li>
+                <li class="collection-item">Letzte Änderung: <b><?=$_SESSION['login']['user_modified']?></b></li>
             </ul>
         </div>
     </div>

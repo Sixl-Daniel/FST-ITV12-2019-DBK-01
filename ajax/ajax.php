@@ -443,27 +443,44 @@ switch($request) {
         $enteredUsername = Helper::escape($_POST['username']);
         $enteredPassword = Helper::escape($_POST['password']);
 
-        $users = parse_ini_file(ROOT . "config/users.ini", true);
+        try {
+            $db = new Database();
+            $userModel = new ModelUser($db);
 
-        $dbPassword = array_key_exists($enteredUsername, $users) ? $users[$enteredUsername]['password'] : '';
+            $user = $userModel->verify($enteredUsername, $enteredPassword);
 
-        // $dbPassword = $users[$enteredUsername]['password'];
+            if(!empty($user)) {
 
-        if($dbPassword == $enteredPassword) {
-            // write data to session
-            $_SESSION['login'] = $users[$enteredUsername];
-            $timestamp = time();
-            $_SESSION['login']['timestamp'] = $timestamp;
-            $_SESSION['login']['time'] = strftime("%A, %d. %B %Y, %H:%M Uhr", $timestamp);
-            $loggedIn = true;
-            // respond
-            $response->status = "success";
-            $response->icon = "success";
-            $response->heading = 'Login';
-            $response->message = "Sie wurden erfolgreich eingeloggt.";
-        } else {
-            $response->heading = 'Ungültige Zugangsdaten';
-            $response->message = "Diese Kombination aus Nutzername und Passwort existiert leider nicht. Bitte kontrollieren Sie Ihre Eingaben.";
+                // set time
+                $timestamp = time();
+                $timeformat = "%A, %d. %B %Y, %H:%M Uhr";
+                $timeformatShort = "%d.%m.%Y, %H:%M Uhr";
+
+                // write data to session
+                $_SESSION['login']['user_name'] = $user->user_name;
+                $_SESSION['login']['first_name'] = $user->first_name;
+                $_SESSION['login']['last_name'] = $user->last_name;
+                $_SESSION['login']['email'] = $user->email;
+                $_SESSION['login']['salutation'] = $user->salutation;
+                $_SESSION['login']['role'] = $user->role;
+                $_SESSION['login']['timestamp'] = $timestamp;
+                $_SESSION['login']['time'] = strftime($timeformat, $timestamp);
+                $_SESSION['login']['user_created'] = strftime($timeformatShort, strtotime($user->created));
+                $_SESSION['login']['user_modified'] = strftime($timeformatShort, strtotime($user->modified));
+
+                // respond
+                $response->status = "success";
+                $response->icon = "success";
+                $response->heading = 'Login';
+                $response->message = "Sie wurden erfolgreich eingeloggt.";
+            } else {
+                $response->heading = 'Ungültige Zugangsdaten';
+                $response->message = "Diese Kombination aus Nutzername und Passwort existiert leider nicht. Bitte kontrollieren Sie Ihre Eingaben.";
+            }
+
+        } catch(PDOException $e) {
+            $response->message = "Sie konnten leider nicht eingeloggt werden.";
+            error_log($e);
         }
 
         break;
