@@ -16,7 +16,7 @@ if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
                 <li class="collection-item">„Single entry point“ und primitives Routing über die <code>index.php</code></li>
                 <li class="collection-item">Einfache PDO-Wrapper-Klasse</li>
                 <li class="collection-item">Modellklassen für die Entitäten der Datenbank</li>
-                <li class="collection-item">CRUD via AJAX (ohne Update)</li>
+                <li class="collection-item">CRUD via AJAX</li>
                 <li class="collection-item">Einfache Authen&shy;tifizierung und Rollen&shy;verwaltung über Sessions</li>
                 <li class="collection-item">Responsives Design</li>
             </ul>
