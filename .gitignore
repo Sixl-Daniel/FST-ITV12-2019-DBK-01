@@ -18,6 +18,8 @@ composer.phar
 
 # misc
 
+test.page.php
+
 /.idea/
 
 .DS_Store
