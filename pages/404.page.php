@@ -6,7 +6,7 @@ if(!defined('ROOT')) die("Kein direkter Zugriff erlaubt.");
 
 <section class="section section--404">
     <div class="row">
-        <div class="col s12 m11 m">
+        <div class="col s12 m11">
             <p><i class="material-icons red-text">clear</i> Diese Seite konnte leider nicht gefunden werden.</p>
             <p class="right-align">
                 <a href="/" class="btn waves-effect waves-light">
