@@ -130,6 +130,10 @@ jQuery(document).ready(function ($) {
                 note.fire($errorHeading, "Ihre Anmeldedaten konnten leider nicht überprüft werden.", $errorIcon);
                 break;
 
+            case 'registerNewUser':
+                note.fire($errorHeading, "Der neue Nutzer konnte leider nicht angelegt werden.", $errorIcon);
+                break;
+
             default:
                 note.fire($errorHeading, "Die Anfrage konnte leider nicht verarbeitet werden.", $errorIcon);
         }
@@ -766,5 +770,68 @@ jQuery(document).ready(function ($) {
             });
     }
 
-});
-      
+    /*
+     * REGISTRATION
+     *********************************************/
+
+    const formRegistration = $("#registration-form");
+
+    formRegistration.on('submit', function (event) {
+        event.preventDefault();
+        // get fields
+        const fields = [];
+        $(this).find("input:not(.select-dropdown)").each(function () {
+            fields[$(this).attr('name')] = $(this).val().trim();
+        });
+        fields['salutation'] = $(this).find("input.select-dropdown").val().trim();
+        registerNewUser(fields);
+    });
+
+    function registerNewUser(fields) {
+        // check if all needed fields are there;
+        l(fields);
+        if (
+            !fields['city'] || !fields['email'] ||
+            !fields['firstname'] ||!fields['housenumber'] ||
+            !fields['lastname'] || !fields['password'] ||
+            !fields['salutation'] || !fields['street'] ||
+            !fields['username'] || !fields['zip']
+        ) return;
+        // if all fields register
+        const data = {
+            request: 'registerNewUser',
+            token: token,
+            city: fields['city'],
+            email: fields['email'],
+            firstname: fields['firstname'],
+            housenumber: fields['housenumber'],
+            lastname: fields['lastname'],
+            password: fields['password'],
+            salutation: fields['salutation'],
+            username: fields['username'],
+            zip: fields['zip'],
+            street: fields['street']
+        };
+        $.ajax({
+            type: "POST",
+            url: urlAjaXInternal,
+            data: data
+        })
+            .done(function (results) {
+                // early return if status error / show custom error
+                if (results.status == 'error') {
+                    notify(results);
+                    return;
+                }
+                // success: reset form and reload page
+                if (results.status == 'success') {
+                    notifyThenRedirect(results,'/login');
+                }
+            })
+            .fail(function (xhr) {
+                showGeneralError('registerNewUser');
+            });
+    }
+
+}); // jQuery, document ready
+
