@@ -11,7 +11,7 @@ class Mail {
         $from = 'no-reply@project-sixl.de';
         $fromName = 'Übung Daten­banken ITV34 | Daniel Sixl';
 
-        $subject = "Aktivierung Ihres Accounts für \"https://project-sixl.de\"";
+        $subject = "Aktivierung Ihres Accounts bei \"https://project-sixl.de\"";
         $plural = ($salutation=="Frau") ? "" : "r";
 
         $htmlContent = <<<EOT
