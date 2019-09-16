@@ -39,6 +39,18 @@ img {
   height: auto;
 }
 
+hr {
+  border: 1px solid $teal-lighten-1;
+  border-width: 1px 0 0 0;
+  border: none;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(38, 166, 154, 0), $teal-lighten-1, rgba(38, 166, 154, 0));
+}
+
+.btn--end {
+  margin-top: 1em;
+}
+
 .container {
   max-width: 1600px;
 }
@@ -54,6 +66,7 @@ img {
     border: none;
     margin: 3rem 0;
     padding: 0;
+    background: none;
   }
 }
 

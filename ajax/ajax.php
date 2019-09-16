@@ -12,15 +12,13 @@ if (
 
 if(empty($_POST['request'])) return;
 
+
+
 $request = Helper::escape($_POST['request']);
 
 /* response */
 
 $response = new ResponseJSON();
-
-$response->status = "error";
-$response->icon = "error";
-$response->heading = "Serverseitiger Fehler";
 
 switch($request) {
 
@@ -53,6 +51,7 @@ switch($request) {
                 $buffer .= '</ul>';
 
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "info";
                 $response->heading = "Kursliste<br>$participant->vorname $participant->name";
@@ -83,6 +82,7 @@ switch($request) {
             $insert = $courseModel->add($catalogId, $title, $duration, $prerequisites, $location);
             if(!empty($insert)) {
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Kurs angelegt';
@@ -121,6 +121,7 @@ switch($request) {
 
             if(!empty($update)) {
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Kurs geändert';
@@ -146,6 +147,7 @@ switch($request) {
             $delete = $courseModel->delete($id);
             if(!empty($delete)) {
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Kurs gelöscht';
@@ -175,6 +177,7 @@ switch($request) {
             $insert = $bookingModel->add($course, $participant);
             if(!empty($insert)) {
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Buchung erfolgreich';
@@ -201,6 +204,7 @@ switch($request) {
             $deletion = $bookingModel->delete($id);
             if(!empty($deletion)) {
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Buchung gelöscht';
@@ -242,6 +246,7 @@ switch($request) {
                 }
                 $buffer .= '</ul>';
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "info";
                 $response->heading = "Teilnehmerliste<br>$course->kurs";
@@ -273,6 +278,7 @@ switch($request) {
             $insert = $participantModel->add($name, $firstname, $street, $housenumber, $zip, $city);
             if(!empty($insert)) {
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Teilnehmer angelegt';
@@ -305,6 +311,7 @@ switch($request) {
             $update = $participantModel->update($name, $firstname, $street, $housenumber, $zip, $city, $updateId);
             if(!empty($update)) {
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Teilnehmer geändert';
@@ -330,6 +337,7 @@ switch($request) {
             $deletion = $participantModel->delete($id);
             if(!empty($deletion)) {
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Teilnehmer gelöscht';
@@ -361,7 +369,7 @@ switch($request) {
         $insert = $location->add($city, $school);
         if(!empty($insert)) {
             // respond
-            $status = 200;
+            $response->statusCode = 200;
             $response->status = "success";
             $response->icon = "success";
             $response->heading = 'Ort angelegt';
@@ -390,7 +398,7 @@ switch($request) {
             $update = $location->update($city, $school, $id);
             if(!empty($update)) {
                 // respond
-                $status = 200;
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Ort aktualisiert';
@@ -417,7 +425,7 @@ switch($request) {
             $deletion = $location->delete($id);
             if(!empty($deletion)) {
                 // respond
-                $status = 200;
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Ort gelöscht';
@@ -446,10 +454,9 @@ switch($request) {
         try {
             $db = new Database();
             $userModel = new ModelUser($db);
+            $user = $userModel->get($enteredUsername, $enteredPassword);
 
-            $user = $userModel->verify($enteredUsername, $enteredPassword);
-
-            if(!empty($user)) {
+            if($user) {
 
                 // set time
                 $timestamp = time();
@@ -463,19 +470,26 @@ switch($request) {
                 $_SESSION['login']['email'] = $user->email;
                 $_SESSION['login']['salutation'] = $user->salutation;
                 $_SESSION['login']['role'] = $user->role;
+
+                $_SESSION['login']['street'] = $user->street;
+                $_SESSION['login']['housenumber'] = $user->street_no;
+                $_SESSION['login']['zip'] = $user->zip;
+                $_SESSION['login']['city'] = $user->city;
+
                 $_SESSION['login']['timestamp'] = $timestamp;
                 $_SESSION['login']['time'] = strftime($timeformat, $timestamp);
                 $_SESSION['login']['user_created'] = strftime($timeformatShort, strtotime($user->created));
                 $_SESSION['login']['user_modified'] = strftime($timeformatShort, strtotime($user->modified));
 
                 // respond
+                $response->statusCode = 200;
                 $response->status = "success";
                 $response->icon = "success";
                 $response->heading = 'Login';
                 $response->message = "Sie wurden erfolgreich eingeloggt.";
             } else {
                 $response->heading = 'Ungültige Zugangsdaten';
-                $response->message = "Diese Kombination aus Nutzername und Passwort existiert leider nicht. Bitte kontrollieren Sie Ihre Eingaben.";
+                $response->message = "Diese Kombination aus Nutzername und Passwort existiert leider nicht oder wurde noch nicht aktiviert. Bitte kontrollieren Sie Ihre Eingaben.";
             }
 
         } catch(PDOException $e) {
@@ -485,8 +499,65 @@ switch($request) {
 
         break;
 
+    /*
+     * REGISTRATION
+     ******************************************************************/
+
+    case 'registerNewUser':
+
+        if(
+            empty($_POST['city']) || empty($_POST['email']) ||
+            empty($_POST['firstname']) || empty($_POST['housenumber']) ||
+            empty($_POST['lastname']) || empty($_POST['password']) ||
+            empty($_POST['salutation']) || empty($_POST['username']) ||
+            empty($_POST['zip']) || empty($_POST['street'])
+        ) return;
+
+        $username = Helper::escape($_POST['username']);
+        $firstName = Helper::escape($_POST['firstname']);
+        $lastName = Helper::escape($_POST['lastname']);
+        $email = Helper::escape($_POST['email']);
+        $password = $_POST['password'];
+        $salutation = Helper::escape($_POST['salutation']);
+        $street = Helper::escape($_POST['street']);
+        $houseNumber = Helper::escape($_POST['housenumber']);
+        $zip = Helper::escape($_POST['zip']);
+        $city = Helper::escape($_POST['city']);
+
+        try {
+            $db = new Database();
+            $user = new ModelUser($db);
+            $doi_token = bin2hex(random_bytes(64));
+            $insert = $user->add($username, $firstName, $lastName, $email, $password, $salutation, $street, $houseNumber, $zip, $city, $doi_token);
+
+            if($insert) {
+                $mail = new Mail;
+                $mail->sendDOIMail($username, $firstName, $lastName, $email, $salutation, $doi_token);
+                // respond
+                $response->statusCode = 200;
+                $response->status = "success";
+                $response->icon = "success";
+                $response->heading = 'Neuer User angelegt';
+                $response->message = "Das Konto für <b>$firstName $lastName</b> mit dem Benutzernamen <b>$username</b> wurde erfolgreich hinzugefügt. Eine E-Mail mit einem Aktivierungslink wird an Ihre Adresse <b>$email</b> gesendet. Nach der Bestätigung Ihrer E-Mail-Adresse können Sie sich mit Ihren Nutzerdaten einloggen.";
+            } else {
+                throw new PDOException;
+            }
+
+        } catch(PDOException $e) {
+            if ($e->getCode() == 23000) {
+                $response->heading = "Doppelter Nutzername";
+                $response->message = "Es existiert bereits ein Nutzer mit dem Benutzernamen <b>„${username}“</b> in der Datenbank. Bitte vergeben Sie einen anderen Namen.";
+            } else {
+                $response->message = "Der neue Nutzer „${username}“ konnte leider nicht angelegt werden.";
+            }
+            error_log($e);
+        }
+
+        break;
+
     default:
 
+        $response->statusCode = 400;
         $response->message = "Kein valider Request-Typ.";
 
         break;
@@ -496,5 +567,5 @@ switch($request) {
 // provide JSON
 
 header('Content-type:application/json;charset=utf-8');
-header('Status: 200');
+header("Status: $response->statusCode");
 echo  json_encode($response);
