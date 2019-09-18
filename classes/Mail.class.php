@@ -65,7 +65,7 @@ class Mail {
             <body> 
                 <h1>Aktivierung Ihres Accounts</h1>
                 <p>Sehr geehrte$plural $salutation $lastName,<br>bitte klicken Sie nachfolgenden Link um die Aktivierung Ihres Accounts abzuschließen:</p>
-                <p><a class="button-link" href="https://project-sixl.de/registration/register_new_user/$userName?doi_token=$doi_token">E-Mail-Adresse ($email) bestätigen und Account aktivieren</a></p>
+                <p><a class="button-link" href="https://project-sixl.de/registration/register_new_user/$userName?doi_token=$doi_token">E-Mail-Adresse bestätigen und Account aktivieren</a></p>
                 <h2>Ihre Anmeldedaten</h2>
                 <p>Vorname: <strong>$firstName</strong><br>
                 Nachname: <strong>$lastName</strong><br>
